@@ -2,7 +2,7 @@
 Author: Qi7
 Date: 2022-11-07 13:30:11
 LastEditors: aaronli-uga ql61608@uga.edu
-LastEditTime: 2022-11-09 15:40:44
+LastEditTime: 2022-11-09 15:46:45
 Description: 
 '''
 #%%
@@ -74,7 +74,7 @@ plt.show()
 
 # %%
 # Specify a start time or current time
-startTime = datetime.datetime(2022, 11, 9, 14, 35, 0, 0, tz_NY)
+startTime = datetime.datetime(2022, 11, 9, 14, 50, 0, 0, tz_NY)
 # startTime = datetime.datetime.now(tz_NY)
 time_interval = 1 / fs
 # timestamp = [startTime.timestamp()]
