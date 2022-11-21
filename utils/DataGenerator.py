@@ -73,7 +73,8 @@ def generate(seq_length, num_cycles, std, starting_point, cycles, cycles_distrib
     """
 
     cycle_length = int(seq_length / num_cycles)
-    starting_point = round(random.uniform(starting_point[0], starting_point[1]), 2)
+    # starting_point = round(random.uniform(starting_point[0], starting_point[1]), 2)
+    starting_point = starting_point
     x, y = [0], [starting_point]
     for cycle_num in range(num_cycles):
         cycle = (get_cycle(cycles, cycles_distribution))
@@ -83,7 +84,8 @@ def generate(seq_length, num_cycles, std, starting_point, cycles, cycles_distrib
             std_addition = get_std_addition(step_size, std, item[0])
             y.append(y[-1] + step_size + std_addition)
             x.append(x[-1] + 1)
-    y_max_value = round(random.uniform(y_max_value[0], y_max_value[1]), 2)
+    # y_max_value = round(random.uniform(y_max_value[0], y_max_value[1]), 2)
+    y_max_value = y_max_value
     divide = max(math.fabs(max(y)), math.fabs(min(y)))
     if divide == 0:
         print(y)
