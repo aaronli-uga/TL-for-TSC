@@ -2,7 +2,7 @@
 Author: Qi7
 Date: 2022-11-21 10:25:15
 LastEditors: aaronli-uga ql61608@uga.edu
-LastEditTime: 2022-11-21 12:49:16
+LastEditTime: 2022-11-22 10:30:09
 Description: 
 '''
 import warnings
@@ -38,23 +38,23 @@ client = InfluxDBClient(
 )
 
 #%% Example for generating some sinewave data / peak data
-fs = 10 #Hz
+fs = 1 #Hz
 # what the time series sequence length will be
 seq_lengths = 100
 # How many samples to generate
 num_samples = 1
 
 # number of cycles we want our segment pattern to repeat itself
-num_cycles = 1
+num_cycles = 3
 # How much std or noise we want to add to the time series
 std = 0
 # a start and end range for the starting point of the time series
-# starting_point = [-1, 1]
-starting_point = 0
+starting_point = [-1, 1]
+# starting_point = 0
 
 # to what value we would like to normalized the final time series
-# y_max_value = [-2, 2]
-y_max_value = 2
+y_max_value = [-2, 2]
+# y_max_value = 2
 
 kwargs = {
     'num_samples': num_samples,
@@ -83,11 +83,11 @@ timestamp = startTime.timestamp()
 
 while True:
     UTS = signal_pattern(**kwargs).generate_data()
-    fig, (ax1) = plt.subplots(1, 1,figsize=(10,5))
-    fig.suptitle('UpAndDown two samples')
-    ax1.plot(UTS[0])
-    ax1.set_title("Generated UTS")
-    plt.show()
+    # fig, (ax1) = plt.subplots(1, 1,figsize=(10,5))
+    # fig.suptitle('UpAndDown two samples')
+    # ax1.plot(UTS[0])
+    # ax1.set_title("Generated UTS")
+    # plt.show()
     UTS = UTS.flatten()
     for i in range(len(UTS)):
         writeData = [
@@ -97,17 +97,17 @@ while True:
             "fields": {
                 "package number": UTS[i]
             },
-            "time": int(timestamp * 1000000000)  #change to the 
+            "time": int(timestamp * 1)  #change to the 
             }
         ]
         timestamp += time_interval
 
         client.write_points(
-            writeData, time_precision="n", batch_size=10, protocol="json"
+            writeData, time_precision="s", batch_size=10, protocol="json"
         )
         # client.write_points(
         #     writeData, batch_size=10, protocol="json"
         # )
         time.sleep(time_interval)
-        print(timestamp)
+        # print(timestamp)
 # %%
