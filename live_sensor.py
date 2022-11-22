@@ -2,7 +2,7 @@
 Author: Qi7
 Date: 2022-11-21 10:25:15
 LastEditors: aaronli-uga ql61608@uga.edu
-LastEditTime: 2022-11-22 10:30:09
+LastEditTime: 2022-11-22 11:09:42
 Description: 
 '''
 import warnings
@@ -95,7 +95,7 @@ while True:
             "measurement": measurement,
             "tags": {"location": tag},
             "fields": {
-                "package number": UTS[i]
+                "value": UTS[i]
             },
             "time": int(timestamp * 1)  #change to the 
             }
@@ -108,6 +108,5 @@ while True:
         # client.write_points(
         #     writeData, batch_size=10, protocol="json"
         # )
-        time.sleep(time_interval)
-        # print(timestamp)
+        time.sleep(time_interval*0.7)
 # %%
