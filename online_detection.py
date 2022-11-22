@@ -2,7 +2,7 @@
 Author: Qi7
 Date: 2022-11-22 10:32:35
 LastEditors: aaronli-uga ql61608@uga.edu
-LastEditTime: 2022-11-22 11:53:48
+LastEditTime: 2022-11-22 13:11:01
 Description: 
 '''
 import pandas as pd 
@@ -35,11 +35,11 @@ client = InfluxDBClient(
 )
 
 # define the reading time range of datebase
-query_window_size = 20 # query window size is 20 seconds
+query_window_size = 100 # query window size is 20 seconds
 
 while True:
     end_time = datetime.datetime.now()
-    start_time = end_time - datetime.timedelta(seconds=20)
+    start_time = end_time - datetime.timedelta(seconds=query_window_size)
 
     start_timestamp = start_time.timestamp()
     start_str = str(int((start_timestamp) * 1000000000))
@@ -82,6 +82,15 @@ while True:
     df = pd.DataFrame(lists).T
     df.columns = ['ds', 'y']
     
+    # use model here to do the prediction or attack detection
+    m = Prophet()
+    m.fit(df)
+    future = m.make_future_dataframe(periods=50)
+    forecast = m.predict(future)
+    # fig1 = m.plot(forecast)
+    # fig1.show()
+    
+    
     isAnomly = randint(0, 1)
 
     writeData = [
@@ -99,4 +108,5 @@ while True:
         writeData, time_precision="s", batch_size=10, protocol="json"
     )
 
-    time.sleep(query_window_size * 0.8)
+    # time.sleep(query_window_size * 0.8)
+    time.sleep(1)
